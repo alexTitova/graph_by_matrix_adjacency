@@ -23,7 +23,7 @@ class App extends Template
 {
     task_part =1;
     chekc_count=0; // количество проверок
-    graph: IGraph<IVertex, IEdge> = this.empty_graph(); // граф студента
+//    graph: IGraph<IVertex, IEdge> = ; // граф студента
  //   matrix: number [][] = [[0, 1, 0, 1],
  //                           [1,0, 1,1],
  //                           [0,1,0,1],
@@ -45,9 +45,10 @@ class App extends Template
     protected getArea(): React.SFC<{}>
     {
        // this.graph = this.empty_graph();
-        this.graph = GraphGenerator.generate(0);
+      //  this.graph = GraphGenerator.generate(0);
+        this.matrix = store.GetState().matrix;
         return () => <GraphVisualizer
-            graph = {this.graph} //вот здесь не генерится
+            graph = {graphModel} //вот здесь не генерится
            // graph={this.graph}
             adapterType={'writable'}
             incidentEdges={false}
