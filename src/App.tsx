@@ -36,6 +36,7 @@ class App extends Template
         super(props);
         this.calculate = this.calculate.bind(this);
         this.getArea = this.getArea.bind(this);
+        console.log("constructor");
     }
 
 
