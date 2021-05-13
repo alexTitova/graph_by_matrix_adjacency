@@ -28,7 +28,7 @@ class App extends Template
  //                           [1,0, 1,1],
  //                           [0,1,0,1],
  //                           [1,1,1,0]]; //матрицв тиз варианта
-    matrix:number [][] = store.GetState().matrix;
+    matrix:number [][] = [];// = store.GetState().matrix;
 
 
     constructor(props:{})
@@ -48,8 +48,8 @@ class App extends Template
     protected getArea(): React.SFC<{}>
     {
         //this.graph = this.empty_graph();
-       //  this.graph = GraphGenerator.generate(0);
-        this.graph = this.graph_by_variant();
+         this.graph = GraphGenerator.generate(0);
+       // this.graph = this.graph_by_variant();
         this.matrix = store.GetState().matrix;
         return () => <GraphVisualizer
             //graph = {graphModel} //вот здесь не генерится
