@@ -203,6 +203,7 @@ class App extends Template
 
     // @ts-ignore
     task(): FunctionComponent<{}> {
+        console.log("task");
         if (this.task_part === 1) {
             return () =>
                 <div>
