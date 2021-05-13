@@ -51,15 +51,17 @@ class App extends Template
        //  this.graph = GraphGenerator.generate(0);
        // this.graph = this.graph_by_variant();
       //  this.matrix = store.GetState().matrix;
-        console.log("getArea");
+
         return () => <GraphVisualizer
-            graph = {graphModel} //вот здесь не генерится
+         //   graph = {graphModel} //вот здесь не генерится
          //   graph={this.graph}
+            graph = { GraphGenerator.generate(0)}
             adapterType={'writable'}
             incidentEdges={false}
             weightedEdges={false}
             namedEdges={true}
         />;
+
     }
 
     graph_by_variant():IGraph<IVertex, IEdge>{
@@ -82,6 +84,7 @@ class App extends Template
 
     getTaskToolbar()
     {
+        console.log("toolbar");
         Toolbar.prototype.getButtonList = () => {
             function beforeComplete(this: App):  Promise<{ success: boolean; fee: number }> {
                 return new Promise((resolve => {
