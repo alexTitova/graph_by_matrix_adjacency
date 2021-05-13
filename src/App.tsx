@@ -24,11 +24,11 @@ class App extends Template
     task_part =1;
     chekc_count=0; // количество проверок
     graph: IGraph<IVertex, IEdge> = this.empty_graph(); // граф студента
-    matrix: number [][] = [[0, 1, 0, 1],
-                            [1,0, 1,1],
-                            [0,1,0,1],
-                            [1,1,1,0]]; //матрицв тиз варианта
-    //matrix:number [][] = store.GetState().matrix
+ //   matrix: number [][] = [[0, 1, 0, 1],
+ //                           [1,0, 1,1],
+ //                           [0,1,0,1],
+ //                           [1,1,1,0]]; //матрицв тиз варианта
+    matrix:number [][] = store.GetState().matrix;
 
 
     constructor(props:{})
@@ -44,10 +44,11 @@ class App extends Template
 
     protected getArea(): React.SFC<{}>
     {
-        this.graph = this.empty_graph();
+       // this.graph = this.empty_graph();
+        this.graph = GraphGenerator.generate(0);
         return () => <GraphVisualizer
-            //graph = {GraphGenerator.generate(0)} //вот здесь не генерится
-            graph={this.graph}
+            graph = {this.graph} //вот здесь не генерится
+           // graph={this.graph}
             adapterType={'writable'}
             incidentEdges={false}
             weightedEdges={false}
@@ -73,45 +74,6 @@ class App extends Template
         return Toolbar;
     }
 
-
-/*
-    private get_graph(): IGraph<IVertex, IEdge> {
-        const graph: IGraphView = store.getState().graph;
-        let data = [
-            {
-                "type": "graph",
-                "value": {
-                    "vertices": [""],
-                    "edges": [{
-                        "source": "",
-                        "target": ""
-                    }]
-                }
-
-            }
-        ]
-        let vertices = graph.vertices;
-        let edges = graph.edges;
-        let i = 0;
-        data[0].value.vertices.shift();
-        vertices.forEach(() => {
-            i = data[0].value.vertices.push(i.toString());
-        });
-        data[0].value.edges.shift();
-        edges.forEach((e: any) => {
-            if (e.name) {
-                data[0].value.edges.push({"source": e.vertexOne, "target": e.vertexTwo})
-            } else {
-                data[0].value.edges.push({
-                    "source": e.vertexOne,
-                    "target": e.vertexTwo
-                })
-            }
-        });
-        return this.graphManager(data[0].value);
-    }
-
-*/
 
 
     private empty_graph():IGraph<IVertex, IEdge>{
