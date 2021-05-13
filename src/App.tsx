@@ -48,12 +48,13 @@ class App extends Template
     protected getArea(): React.SFC<{}>
     {
         //this.graph = this.empty_graph();
-         this.graph = GraphGenerator.generate(0);
+       //  this.graph = GraphGenerator.generate(0);
        // this.graph = this.graph_by_variant();
       //  this.matrix = store.GetState().matrix;
+        console.log("getArea");
         return () => <GraphVisualizer
-            //graph = {graphModel} //вот здесь не генерится
-            graph={this.graph}
+            graph = {graphModel} //вот здесь не генерится
+         //   graph={this.graph}
             adapterType={'writable'}
             incidentEdges={false}
             weightedEdges={false}
