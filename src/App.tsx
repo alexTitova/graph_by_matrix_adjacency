@@ -13,7 +13,7 @@ import {
 } from "graphlabs.core.template";
 import {IVertex,IGraph, IEdge, GraphGenerator, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
 
-import {Matrix, } from 'graphlabs.core.lib';
+import {Matrix,  } from 'graphlabs.core.lib';
 import {rename} from "fs";
 
 
@@ -23,7 +23,7 @@ class App extends Template
 {
     task_part =1;
     chekc_count=0; // количество проверок
-//    graph: IGraph<IVertex, IEdge> = ; // граф студента
+    graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(0);  // граф студента
  //   matrix: number [][] = [[0, 1, 0, 1],
  //                           [1,0, 1,1],
  //                           [0,1,0,1],
@@ -45,11 +45,11 @@ class App extends Template
     protected getArea(): React.SFC<{}>
     {
        // this.graph = this.empty_graph();
-      //  this.graph = GraphGenerator.generate(0);
+        this.graph = GraphGenerator.generate(0);
         this.matrix = store.GetState().matrix;
         return () => <GraphVisualizer
-            graph = {graphModel} //вот здесь не генерится
-           // graph={this.graph}
+            //graph = {graphModel} //вот здесь не генерится
+            graph={this.graph}
             adapterType={'writable'}
             incidentEdges={false}
             weightedEdges={false}
