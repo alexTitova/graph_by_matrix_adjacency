@@ -45,8 +45,8 @@ class App extends Template
 
     protected getArea(): React.SFC<{}>
     {
-        this.graph = this.empty_graph();
-    //    this.graph = GraphGenerator.generate(0);
+        //this.graph = this.empty_graph();
+       this.graph = GraphGenerator.generate(0);
         this.matrix = store.GetState().matrix;
         return () => <GraphVisualizer
             //graph = {graphModel} //вот здесь не генерится
