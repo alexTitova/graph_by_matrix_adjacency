@@ -46,7 +46,8 @@ class App extends Template
     protected getArea(): React.SFC<{}>
     {
         //this.graph = this.empty_graph();
-       this.graph = GraphGenerator.generate(0);
+       //  this.graph = GraphGenerator.generate(0);
+        this.graph = this.graph_by_variant();
         this.matrix = store.GetState().matrix;
         return () => <GraphVisualizer
             //graph = {graphModel} //вот здесь не генерится
@@ -56,6 +57,24 @@ class App extends Template
             weightedEdges={false}
             namedEdges={true}
         />;
+    }
+
+    graph_by_variant():IGraph<IVertex, IEdge>{
+        const data = sessionStorage.getItem('variant');
+        let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+        let objectData;
+        try {
+            objectData = JSON.parse(data || 'null');
+            console.log('The variant is successfully parsed');
+        } catch (err) {
+            console.log('Error while JSON parsing');
+        }
+        console.log(this.graphManager(objectData.data[0].value));
+        if (data) {
+            graph = this.graphManager(objectData.data[0].value);
+            console.log('The graph is successfully built from the variant');
+        }
+        return graph;
     }
 
     getTaskToolbar()
