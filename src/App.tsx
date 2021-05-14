@@ -28,7 +28,7 @@ class App extends Template
  //                           [1,0, 1,1],
  //                           [0,1,0,1],
  //                           [1,1,1,0]]; //матрицв тиз варианта
-    matrix:number [][] = [];// = store.GetState().matrix;
+    matrix:number [][] = this.get_matrix_by_variant();
 
 
     constructor(props:{})
@@ -129,7 +129,7 @@ class App extends Template
     }
 
 
-
+//для разработки
     private empty_graph():IGraph<IVertex, IEdge>{
         const data = sessionStorage.getItem('variant');
         let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
@@ -232,6 +232,7 @@ class App extends Template
     task(): FunctionComponent<{}> {
         console.log("task");
         if (this.task_part === 1) {
+            console.log(this.matrix);
             return () =>
                 <div>
                     <form>
