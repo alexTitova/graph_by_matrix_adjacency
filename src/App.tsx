@@ -50,7 +50,7 @@ class App extends Template
         //this.graph = this.empty_graph();
        //  this.graph = GraphGenerator.generate(0);
        // this.graph = this.graph_by_variant();
-      //  this.matrix = store.GetState().matrix;
+       this.matrix = this.get_matrix_by_variant();
 
         return () => <GraphVisualizer
          //   graph = {graphModel} //вот здесь не генерится
@@ -64,7 +64,9 @@ class App extends Template
 
     }
 
-    graph_by_variant():IGraph<IVertex, IEdge>{
+			// написать тоже такую фигню для матрицы это и есть проблема 
+			
+/*    graph_by_variant():IGraph<IVertex, IEdge>{
         const data = sessionStorage.getItem('variant');
         let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
         let objectData;
@@ -80,6 +82,31 @@ class App extends Template
             console.log('The graph is successfully built from the variant');
         }
         return graph;
+    }
+*/
+
+    get_matrix_by_variant():number[][]
+    {
+        const data = sessionStorage.getItem('variant');
+        let matrix:number[][] = [];
+        let objectData;
+        try
+        {
+            objectData = JSON.parse(data || 'null');
+            console.log('The variant is successfully parsed');
+        }
+        catch(err)
+        {
+            console.log('Error while JSON parsing');
+        }
+        console.log(this.matrixManager(objectData.data[0].value));
+        if(data)
+        {
+            matrix=this.matrixManager(objectData.data[0].value);
+            console.log('The matrix is successfully built from the variant');
+        }
+
+        return matrix;
     }
 
     getTaskToolbar()
