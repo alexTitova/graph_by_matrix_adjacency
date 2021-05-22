@@ -23,13 +23,12 @@ class App extends Template
 {
     task_part =1;
     chekc_count=0; // количество проверок
-    graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(0);  // граф студента
- //   matrix: number [][] = [[0, 1, 0, 1],
- //                           [1,0, 1,1],
- //                           [0,1,0,1],
- //                           [1,1,1,0]]; //матрицв тиз варианта
-    matrix:number [][] = this.get_matrix_by_variant();
-
+    graph: IGraph<IVertex, IEdge> =this.empty_graph();  // граф студента
+    //matrix: number [][] = this.get_matrix_by_variant();
+    matrix:number[][] = [[0,1,1,1],
+                         [1,0,0,0],
+                         [1,0,0,0],
+                         [1, 0,0,0]]
 
     constructor(props:{})
     {
@@ -47,15 +46,14 @@ class App extends Template
 
     protected getArea(): React.SFC<{}>
     {
-        //this.graph = this.empty_graph();
-       //  this.graph = GraphGenerator.generate(0);
+        this.graph = this.empty_graph();
        // this.graph = this.graph_by_variant();
-       this.matrix = this.get_matrix_by_variant();
+   //    this.matrix = this.get_matrix_by_variant();
 
         return () => <GraphVisualizer
-         //   graph = {graphModel} //вот здесь не генерится
-         //   graph={this.graph}
-            graph = { GraphGenerator.generate(0)}
+          //  graph = {graphModel} //вот здесь не генерится
+           graph={this.graph}
+        //    graph = { GraphGenerator.generate(0)}
             adapterType={'writable'}
             incidentEdges={false}
             weightedEdges={false}
@@ -65,27 +63,9 @@ class App extends Template
     }
 
 			// написать тоже такую фигню для матрицы это и есть проблема 
-			
-/*    graph_by_variant():IGraph<IVertex, IEdge>{
-        const data = sessionStorage.getItem('variant');
-        let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
-        let objectData;
-        try {
-            objectData = JSON.parse(data || 'null');
-            console.log('The variant is successfully parsed');
-        } catch (err) {
-            console.log('Error while JSON parsing');
-        }
-        console.log(this.graphManager(objectData.data[0].value));
-        if (data) {
-            graph = this.graphManager(objectData.data[0].value);
-            console.log('The graph is successfully built from the variant');
-        }
-        return graph;
-    }
-*/
 
-    get_matrix_by_variant():number[][]
+
+    private get_matrix_by_variant():number[][]
     {
         const data = sessionStorage.getItem('variant');
         let matrix:number[][] = [];
@@ -130,6 +110,7 @@ class App extends Template
 
 
 //для разработки
+
     private empty_graph():IGraph<IVertex, IEdge>{
         const data = sessionStorage.getItem('variant');
         let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
@@ -158,6 +139,8 @@ class App extends Template
     }
 
 
+
+
     private get_matrixAdjacency_byGraph(student_graph:IGraph<IVertex, IEdge>): number[][]
     {
         let result: number[][]=[];
@@ -183,12 +166,18 @@ class App extends Template
     }
 
 
+
+
     private graph_check(): boolean
     {
         let flag: boolean = true;
+
         let matrixAdj_by_student_graph:number[][] = this.get_matrixAdjacency_byGraph(this.graph);
+        console.log(matrixAdj_by_student_graph);
+
         let i:number =0;
         let j:number =0;
+
 
         if(this.graph.vertices.length===this.matrix.length)
         {
@@ -230,21 +219,20 @@ class App extends Template
 
     // @ts-ignore
     task(): FunctionComponent<{}> {
-        console.log("task");
+
         if (this.task_part === 1) {
-            console.log(this.matrix);
             return () =>
                 <div>
                     <form>
                         <span> Матрица смежности </span>
-                        <br> </br>
                         <Matrix rows={this.matrix.length}
                                 columns={this.matrix.length}
                                 readonly={true}
                                 defaultValues={this.matrix}/>
-                        <br> </br>
+
                         <button type="button"
                                 onClick={() => {
+
                                     this.task_part += 1;
                                     this.forceUpdate();
                                 }}> Проверить граф
