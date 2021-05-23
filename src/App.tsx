@@ -46,7 +46,7 @@ class App extends Template
 
     protected getArea(): React.SFC<{}>
     {
-        this.graph = this.empty_graph();
+  //      this.graph = this.empty_graph();
        // this.graph = this.graph_by_variant();
    //    this.matrix = this.get_matrix_by_variant();
 
@@ -91,7 +91,6 @@ class App extends Template
 
     getTaskToolbar()
     {
-        console.log("toolbar");
         Toolbar.prototype.getButtonList = () => {
             function beforeComplete(this: App):  Promise<{ success: boolean; fee: number }> {
                 return new Promise((resolve => {
@@ -257,6 +256,7 @@ class App extends Template
                             <button type="button"
                                     onClick={() => {
                                         this.task_part = 1;
+                                        this.chekc_count-=1;
                                         this.forceUpdate();
                                     }}> Исправить ошибки
                             </button>
@@ -274,6 +274,8 @@ class App extends Template
 
     private calculate()
     {
+        console.log(this.graph.vertices.length);
+        console.log(this.graph.edges.length);
         let  res:number = (this.graph.vertices.length+this.graph.edges.length)* this.chekc_count;
         return {success: res===0, fee: res}
     }
