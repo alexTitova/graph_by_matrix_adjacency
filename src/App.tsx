@@ -193,14 +193,14 @@ class App extends Template
         let j:number =0;
 
 
-        if(this.graph.vertices.length===this.matrix.length)
+        if(graphModel.vertices.length===this.matrix.length)
         {
-            while (flag && i<this.graph.vertices.length)
+            while (flag && i<graphModel.vertices.length)
             {
                     if(matrixAdj_by_student_graph[i][i]===0)
                     {
                         j=i+1;
-                        while (flag && j < this.graph.vertices.length)
+                        while (flag && j < graphModel.vertices.length)
                         {
                             if(matrixAdj_by_student_graph[i][j]!==matrixAdj_by_student_graph[j][i] || matrixAdj_by_student_graph[i][j] !== this.matrix[i][j])
                             {
