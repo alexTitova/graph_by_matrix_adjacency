@@ -11,10 +11,13 @@ import {
     Toolbar,
     ToolButtonList
 } from "graphlabs.core.template";
-import {IVertex,IGraph, IEdge, GraphGenerator, Graph, Vertex, Edge } from 'graphlabs.core.graphs';
+import {IVertex,IGraph, IEdge, GraphGenerator, Graph, Vertex, Edge} from 'graphlabs.core.graphs';
 
 import {Matrix,  } from 'graphlabs.core.lib';
 import {rename} from "fs";
+
+
+
 
 
 
@@ -23,12 +26,13 @@ class App extends Template
 {
     task_part =1;
     chekc_count=0; // количество проверок
-    graph: IGraph<IVertex, IEdge> =this.empty_graph();  // граф студента
-    //matrix: number [][] = this.get_matrix_by_variant();
-    matrix:number[][] = [[0,1,1,1],
-                         [1,0,0,0],
-                         [1,0,0,0],
-                         [1, 0,0,0]]
+
+    graph: IGraph<IVertex, IEdge> = GraphGenerator.generate(0);
+    matrix: number [][] = this.get_matrix_by_variant();
+//    matrix:number[][] = [[0,1,1,1],
+//                         [1,0,0,0],
+//                         [1,0,0,0],
+//                         [1, 0,0,0]]
 
     constructor(props:{})
     {
@@ -37,22 +41,34 @@ class App extends Template
         this.getArea = this.getArea.bind(this);
         this.calculate = this.calculate.bind(this);
 
-
+        console.log("constructor")
     }
 
 
+    componentWillMount()
+    {
+        //для инициализации графа
+        let graphModel:  IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
+        let init:(graph: IGraph<IVertex, IEdge>) => void;
+        init = function (graph: IGraph<IVertex, IEdge>) {
+            graphModel = graph;
+        }
+        //
 
+        init(this.graph);
 
+        console.log("component")
+    }
 
     protected getArea(): React.SFC<{}>
     {
   //      this.graph = this.empty_graph();
        // this.graph = this.graph_by_variant();
    //    this.matrix = this.get_matrix_by_variant();
-
+        console.log("getArea");
         return () => <GraphVisualizer
-          //  graph = {graphModel} //вот здесь не генерится
-           graph={this.graph}
+           graph = {graphModel} //вот здесь не генерится
+          // graph={this.graph}
         //    graph = { GraphGenerator.generate(0)}
             adapterType={'writable'}
             incidentEdges={false}
@@ -61,8 +77,6 @@ class App extends Template
         />;
 
     }
-
-			// написать тоже такую фигню для матрицы это и есть проблема 
 
 
     private get_matrix_by_variant():number[][]
@@ -86,11 +100,13 @@ class App extends Template
             console.log('The matrix is successfully built from the variant');
         }
 
+        console.log("matrix_by var");
         return matrix;
     }
 
     getTaskToolbar()
     {
+        console.log("toolbar");
         Toolbar.prototype.getButtonList = () => {
             function beforeComplete(this: App):  Promise<{ success: boolean; fee: number }> {
                 return new Promise((resolve => {
@@ -109,7 +125,7 @@ class App extends Template
 
 
 //для разработки
-
+/*
     private empty_graph():IGraph<IVertex, IEdge>{
         const data = sessionStorage.getItem('variant');
         let graph: IGraph<IVertex, IEdge> = new Graph() as unknown as IGraph<IVertex, IEdge>;
@@ -136,7 +152,7 @@ class App extends Template
         }
         return graph;
     }
-
+*/
 
 
 
@@ -160,7 +176,7 @@ class App extends Template
             }
         }
 
-
+        console.log(result);
         return result;
     }
 
@@ -210,7 +226,7 @@ class App extends Template
             this.chekc_count+=1;
         }
 
-
+        console.log("check");
 
         return flag;
     }
