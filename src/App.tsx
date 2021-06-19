@@ -223,50 +223,16 @@ class App extends Template
             return () =>
                 <div>
                     <form>
+                        <span> Постройте граф по данной матрице смежности </span>
+                        <br/>
                         <span> Матрица смежности </span>
                         <Matrix rows={this.matrix.length}
                                 columns={this.matrix.length}
                                 readonly={true}
                                 defaultValues={this.matrix}/>
-
-                        <button type="button"
-                                onClick={() => {
-
-                                    this.task_part += 1;
-                                    this.forceUpdate();
-                                }}> Проверить граф
-                        </button>
                     </form>
                 </div>
         }
-        if (this.task_part === 2) {
-            if (this.graph_check())
-                return () => (
-                    <div>
-                        <form>
-                            <span> Все правильно. Нажмите зеленую галочку для подсчета результата</span>
-                        </form>
-                    </div>
-                );
-            else {
-                return () => (
-                    <div>
-                        <form>
-                            <span> Есть ошибки</span>
-                            <button type="button"
-                                    onClick={() => {
-                                        this.task_part = 1;
-                                        this.chekc_count-=1;
-                                        this.forceUpdate();
-                                    }}> Исправить ошибки
-                            </button>
-                        </form>
-                    </div>
-                );
-            }
-        }
-
-
     }
 
 
@@ -274,9 +240,11 @@ class App extends Template
 
     private calculate()
     {
-        console.log(this.graph.vertices.length);
-        console.log(this.graph.edges.length);
-        let  res:number = (this.graph.vertices.length+this.graph.edges.length)* this.chekc_count;
+        let isChecked = this.graph_check();
+        let res=0;
+        if(!isChecked) {
+            res = (this.graph.vertices.length + this.graph.edges.length) * this.chekc_count;
+        }
         return {success: res===0, fee: res}
     }
 }
