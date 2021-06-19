@@ -259,7 +259,7 @@ class App extends Template
         let isChecked = this.graph_check();
         let res=0;
         if(!isChecked) {
-            res = (this.graph.vertices.length + this.graph.edges.length) * this.chekc_count;
+            res = (graphModel.vertices.length + graphModel.edges.length) * this.chekc_count;
         }
         return {success: res===0, fee: res}
     }
