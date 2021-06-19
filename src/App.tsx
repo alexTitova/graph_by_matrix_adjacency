@@ -187,8 +187,7 @@ class App extends Template
     {
         let flag: boolean = true;
 
-        let matrixAdj_by_student_graph:number[][] = this.get_matrixAdjacency_byGraph(this.graph);
-        console.log(matrixAdj_by_student_graph);
+        let matrixAdj_by_student_graph:number[][] = this.get_matrixAdjacency_byGraph(graphModel);
 
         let i:number =0;
         let j:number =0;
@@ -227,6 +226,7 @@ class App extends Template
         }
 
         console.log("check");
+        console.log(flag);
 
         return flag;
     }
